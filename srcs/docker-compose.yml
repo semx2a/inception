@@ -1,48 +1,58 @@
+#SERVICES
 services:
+  
   mariadb:
     container_name: mariadb
-    networks:
-      - inception
     build:
       context: requirements/mariadb
       dockerfile: Dockerfile
     env_file: .env
+    expose:
+      - "3306"
+    networks:
+      - inception
     volumes:
       - mariadb:/var/lib/mysql
     restart: unless-stopped
-    expose:
-      - "3306"
+  
   nginx:
     container_name: nginx
-    volumes:
-      - wordpress:/var/www/html/wordpress
-    networks:
-      - inception
-    depends_on:
-      - wordpress
     build:
       context: requirements/nginx
       dockerfile: Dockerfile
-    env_file:
-      - .env
-    ports:
-      -"443:443"
-    restart: on-failure
-  wordpress:
-    container_name: wordpress
     env_file: .env
     volumes:
       - wordpress:/var/www/wordpress
     networks:
       - inception
+    depends_on:
+      - wordpress
+    ports:
+      - "443:443"
+    restart: on-failure
+  
+  wordpress:
+    container_name: wordpress
     build:
       context: requirements/wordpress
       dockerfile: Dockerfile
+    env_file: .env
+    expose:
+      - "9000"
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - inception
     depends_on:
       - mariadb
     restart: on-failure
-    expose:
-      - "9000"
+
+#NETWORKS
+networks:
+  inception:
+    driver: bridge
+
+# VOLUMES
 volumes:
   wordpress:
     driver: local
@@ -56,7 +66,3 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/home/semiha/data/mariadb'
-networks:
-  inception:
-    driver: bridge
-pid: "host"
