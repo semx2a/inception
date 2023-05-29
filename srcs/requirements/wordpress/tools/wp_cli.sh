@@ -10,11 +10,12 @@ if test ! -f "$FILE"; then
 	chmod +x wp-cli.phar
 	mv wp-cli.phar /usr/local/bin/wp
 
-	#sleep to allow mariadb time to setup
-	sleep 5
 
 	#wordpress download and unzip
 	wp core download --allow-root
+
+	#sleep to allow mariadb time to setup
+	sleep 5
 
 	#database setup
 	wp config create \
@@ -23,7 +24,9 @@ if test ! -f "$FILE"; then
 		--dbpass=$MYSQL_PASSWORD \
 		--dbhost=mariadb:3306 \
 		--allow-root
-	
+
+	sleep 5
+
 	#webpage setup
 	wp core install \
 		--url=$DOMAIN_NAME \
@@ -34,13 +37,13 @@ if test ! -f "$FILE"; then
 		--allow-root
 	
 	#user setup
-	wp create user \
+	wp user create \
 		$WP_USER_USR \
 		$WP_USER_MAIL \
-		--user_pass=$WP_USER_PSSWD \
 		--role=$WP_USER_ROLE \
+		--user_pass=$WP_USER_PSSWD \
 		--porcelain \
-		-allow-root
+		--allow-root
 
 fi
 
