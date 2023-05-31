@@ -1,7 +1,7 @@
 #!/bin/sh
 
-FILE=/var/www/wordpress/wp-config.php
-cd /var/www/wordpress
+FILE=/var/www/html/wordpress/wp-config.php
+cd /var/www/html/wordpress
 
 if test ! -f "$FILE"; then
 	

@@ -6,7 +6,7 @@
 #    By: seozcan <seozcan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 14:32:18 by seozcan           #+#    #+#              #
-#    Updated: 2023/05/29 21:21:56 by seozcan          ###   ########.fr        #
+#    Updated: 2023/05/31 13:34:00 by seozcan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,16 +27,13 @@ restart :
 down:
 	@docker-compose -f ./srcs/docker-compose.yml down
 
-stop:
-	@docker stop $$(docker ps -q)
+fclean: down
+	@docker rm -f $$(docker ps -qa) || true
+	@docker image rm $$(docker image ls -qa) || true
+	@docker volume rm $$(docker volume ls -q) || true
+	@docker network rm $$(docker network ls -q) || true
+	@sudo rm -rf /home/$$USERNAME/data/*
 
-fclean:
-	@docker stop $$(docker ps -qa)
-	@docker rm $$(docker ps -qa)
-	@docker rmi -f $$(docker images -qa)
-	@docker volume rm $$(docker volume ls -q)
-	@docker network $$(docker network ls -q)
-
-re: clean all
+re: fclean all
 
 .PHONY: all clean fclean re

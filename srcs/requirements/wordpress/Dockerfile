@@ -1,8 +1,8 @@
 FROM debian:buster
 
-RUN apt-get update
+RUN apt-get update && apt-get upgrade -y
 
-RUN apt-get install \
+RUN apt-get install -y \
 	unzip \
 	php \
 	curl \
@@ -19,15 +19,15 @@ RUN apt-get install \
 	php-xmlrpc \
 	php-soap \
 	php-intl \
-	php-zip \
-	-y
-RUN apt-get install default-mysql-client -y
+	php-zip
+
+RUN apt-get install -y default-mysql-client
 
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d/
 RUN mkdir -p /run/php
 
-RUN mkdir -p /var/www/wordpress
-COPY conf/index.php /var/www/wordpress/
+RUN mkdir -p /var/www/html/wordpress
+COPY conf/index.php /var/www/html/wordpress/
 
 EXPOSE 9000
 
