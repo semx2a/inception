@@ -30,7 +30,7 @@ The infrastructure set up as part of this project included:
 
 
 <p align="center">
-  <img src="./.img/inception.png" alt="Inception" width="30dvw">
+  <img src="./.img/inception.png" alt="Inception" width="600">
 </p>
 
 Also, I ensured that the containers would restart in the event of a crash and that two users were set up in the WordPress database, one of whom is the administrator.
