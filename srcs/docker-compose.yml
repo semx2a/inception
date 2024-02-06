@@ -61,10 +61,10 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/semiha/data/wordpress'
+      device: '/Users/semiha/data/wordpress'
   mariadb:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/semiha/data/mariadb'
+      device: '/Users/semiha/data/mariadb'

@@ -33,6 +33,32 @@ The infrastructure set up as part of this project included:
   <img src="./.img/inception.png" alt="Inception" width="600">
 </p>
 
-Also, I ensured that the containers would restart in the event of a crash and that two users were set up in the WordPress database, one of whom is the administrator.
+## Usage
 
-This project demonstrated my ability to follow logical steps, showcase a research and development mindset, and gain a deep understanding of Docker usage and system administration concepts.
+Before running the project, ensure that Docker and Docker Compose are installed on your system.
+
+Run the following command to copy the environment variables file:
+
+```bash
+cp ./src/.env.example ./src/.env
+```
+
+Then, change the values in the `.env` file to match your desired configuration.
+
+To start the project, run the following command:
+
+```bash
+make
+```
+
+## Troubleshooting
+
+This project has only been tested on Ubuntu 20.04. If you encounter any issues while running the project, please ensure that you are using a compatible operating system.
+
+On macOS, you can use OrbStack to run the project in a containerized environment.
+
+If docker-compose is not installed on your system, you can install it using the following command:
+
+```bash
+make install
+```
