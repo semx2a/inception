@@ -6,15 +6,15 @@
 #    By: seozcan <seozcan@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/24 14:32:18 by seozcan           #+#    #+#              #
-#    Updated: 2024/02/06 19:51:57 by seozcan          ###   ########.fr        #
+#    Updated: 2024/02/07 16:03:37 by seozcan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 HOME 		= $(shell echo $$HOME)
 
 all:
-	@sudo mkdir -p $(HOME)/data/mariadb $(HOME)/data/wordpress
-	@docker-compose -f ./srcs/docker-compose.yml up --build -d
+	@mkdir -p $(HOME)/data/mariadb $(HOME)/data/wordpress
+	@docker-compose -f ./src/docker-compose.yml up --build -d 
 
 install :
 	@sudo apt-get update 
@@ -23,18 +23,17 @@ install :
 	@sudo mkdir -p $(HOME)/data/mariadb $(HOME)/data/wordpress 
 	
 restart :
-	@docker-compose -f ./srcs/docker-compose.yml stop
-	@docker-compose -f ./srcs/docker-compose.yml start
+	@docker-compose -f ./src/docker-compose.yml stop
+	@docker-compose -f ./src/docker-compose.yml start
 
 down:
-	@docker-compose -f ./srcs/docker-compose.yml down
+	@docker-compose -f ./src/docker-compose.yml down
 
 fclean: down
-	@docker rm -f $$(docker ps -qa) || true
-	@docker image rm $$(docker image ls -qa) || true
-	@docker volume rm $$(docker volume ls -q) || true
-	@docker network rm $$(docker network ls -q) || true
-	@sudo rm -rf $(HOME)/data/*
+	@docker rm -f $(shell docker ps -qa) || true
+	@docker system prune -af
+	@docker volume rm $(shell docker volume ls -q) || true
+	@rm -rf $(HOME)/data/*
 
 re: fclean all
 
